@@ -25,7 +25,7 @@ class Bogie {
     }
 }
 
-public class TrainConsistManagementApp {
+public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
         List<Bogie> bogies = new ArrayList<>();
 
