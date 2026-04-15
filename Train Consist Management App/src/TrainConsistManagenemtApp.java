@@ -47,5 +47,5 @@ public class TrainConsistManagenemtApp {
         System.out.println("Stream-based Filtering Time: " + (streamEnd - streamStart) + " ns");
 
         System.out.println("Results Match: " + (loopFiltered.size() == streamFiltered.size()));
-    }
+    } // java
 }
