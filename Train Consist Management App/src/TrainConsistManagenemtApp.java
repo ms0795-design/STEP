@@ -1,45 +1,34 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Bogie {
-    private String name;
-    private int capacity;
+    String type;
+    int capacity;
 
-    public Bogie(String name, int capacity) {
-        this.name = name;
+    Bogie(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     @Override
     public String toString() {
-        return name + " (" + capacity + " seats)";
+        return type + " (Capacity: " + capacity + ")";
     }
 }
 
 public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
         List<Bogie> bogies = new ArrayList<>();
-
         bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("AC Chair", 50));
         bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("General", 90));
+        bogies.add(new Bogie("Sleeper", 75));
 
-        System.out.println("Before Sorting:");
-        bogies.forEach(System.out::println);
+        List<Bogie> highCapacityBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity));
-
-        System.out.println("\nAfter Sorting by Capacity (Ascending):");
-        bogies.forEach(System.out::println);
+        highCapacityBogies.forEach(System.out::println);
     }
 }
