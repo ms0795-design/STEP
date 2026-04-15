@@ -1,38 +1,45 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
+
+class GoodsBogie {
+    private String type;
+    private String cargo;
+
+    public GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+}
 
 public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        List<GoodsBogie> goodsBogies = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Rectangular", "Grain"),
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Open", "Coal")
+        );
 
-        String trainIdPatternString = "TRN-\\d{4}";
-        String cargoCodePatternString = "PET-[A-Z]{2}";
+        boolean isSafe = goodsBogies.stream()
+                .allMatch(bogie -> {
+                    if (bogie.getType().equalsIgnoreCase("Cylindrical")) {
+                        return bogie.getCargo().equalsIgnoreCase("Petroleum");
+                    }
+                    return true;
+                });
 
-        Pattern trainIdPattern = Pattern.compile(trainIdPatternString);
-        Pattern cargoCodePattern = Pattern.compile(cargoCodePatternString);
-
-        System.out.print("Enter Train ID: ");
-        String trainIdInput = scanner.nextLine();
-
-        System.out.print("Enter Cargo Code: ");
-        String cargoCodeInput = scanner.nextLine();
-
-        Matcher trainIdMatcher = trainIdPattern.matcher(trainIdInput);
-        Matcher cargoCodeMatcher = cargoCodePattern.matcher(cargoCodeInput);
-
-        if (trainIdMatcher.matches()) {
-            System.out.println("Train ID " + trainIdInput + " is valid.");
+        if (isSafe) {
+            System.out.println("The train formation is safety compliant.");
         } else {
-            System.out.println("Invalid Train ID: " + trainIdInput + ". Format must be TRN- followed by 4 digits.");
+            System.out.println("Safety violation detected! Unsafe cargo configuration.");
         }
-
-        if (cargoCodeMatcher.matches()) {
-            System.out.println("Cargo Code " + cargoCodeInput + " is valid.");
-        } else {
-            System.out.println("Invalid Cargo Code: " + cargoCodeInput + ". Format must be PET- followed by 2 uppercase letters.");
-        }
-
-        scanner.close();
     }
 }
