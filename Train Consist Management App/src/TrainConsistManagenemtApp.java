@@ -1,41 +1,24 @@
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
-        super(message);
-    }
-}
-
-class PassengerBogie {
-    private String type;
-    private int capacity;
-
-    public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException("Capacity must be greater than zero");
-        }
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-}
-
 public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
-        try {
-            PassengerBogie sleeper = new PassengerBogie("Sleeper", 72);
-            System.out.println("Created: " + sleeper.getType() + " with capacity " + sleeper.getCapacity());
+        int[] capacities = {72, 56, 24, 70, 60};
 
-            System.out.println("Attempting to create bogie with invalid capacity...");
-            PassengerBogie invalidBogie = new PassengerBogie("AC Chair", -10);
+        sortBogies(capacities);
 
-        } catch (InvalidCapacityException e) {
-            System.err.println("Caught Expected Error: " + e.getMessage());
+        for (int capacity : capacities) {
+            System.out.print(capacity + " ");
+        }
+    }
+
+    public static void sortBogies(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
         }
     }
 }
