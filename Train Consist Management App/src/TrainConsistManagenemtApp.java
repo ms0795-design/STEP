@@ -1,34 +1,28 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class Bogie {
-    String type;
     int capacity;
+    String type;
 
     Bogie(String type, int capacity) {
         this.type = type;
         this.capacity = capacity;
     }
-
-    @Override
-    public String toString() {
-        return type + " (Capacity: " + capacity + ")";
-    }
 }
 
 public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 50));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 75));
+        List<Bogie> bogies = Arrays.asList(
+                new Bogie("Sleeper", 72),
+                new Bogie("AC Chair", 56),
+                new Bogie("First Class", 24)
+        );
 
-        List<Bogie> highCapacityBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
-        highCapacityBogies.forEach(System.out::println);
+        System.out.println("Total seating capacity: " + totalSeats);
     }
 }
