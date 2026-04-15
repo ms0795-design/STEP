@@ -1,28 +1,38 @@
-import java.util.Arrays;
-import java.util.List;
-
-class Bogie {
-    int capacity;
-    String type;
-
-    Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
-}
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.Scanner;
 
 public class TrainConsistManagenemtApp {
     public static void main(String[] args) {
-        List<Bogie> bogies = Arrays.asList(
-                new Bogie("Sleeper", 72),
-                new Bogie("AC Chair", 56),
-                new Bogie("First Class", 24)
-        );
+        Scanner scanner = new Scanner(System.in);
 
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+        String trainIdPatternString = "TRN-\\d{4}";
+        String cargoCodePatternString = "PET-[A-Z]{2}";
 
-        System.out.println("Total seating capacity: " + totalSeats);
+        Pattern trainIdPattern = Pattern.compile(trainIdPatternString);
+        Pattern cargoCodePattern = Pattern.compile(cargoCodePatternString);
+
+        System.out.print("Enter Train ID: ");
+        String trainIdInput = scanner.nextLine();
+
+        System.out.print("Enter Cargo Code: ");
+        String cargoCodeInput = scanner.nextLine();
+
+        Matcher trainIdMatcher = trainIdPattern.matcher(trainIdInput);
+        Matcher cargoCodeMatcher = cargoCodePattern.matcher(cargoCodeInput);
+
+        if (trainIdMatcher.matches()) {
+            System.out.println("Train ID " + trainIdInput + " is valid.");
+        } else {
+            System.out.println("Invalid Train ID: " + trainIdInput + ". Format must be TRN- followed by 4 digits.");
+        }
+
+        if (cargoCodeMatcher.matches()) {
+            System.out.println("Cargo Code " + cargoCodeInput + " is valid.");
+        } else {
+            System.out.println("Invalid Cargo Code: " + cargoCodeInput + ". Format must be PET- followed by 2 uppercase letters.");
+        }
+
+        scanner.close();
     }
 }
