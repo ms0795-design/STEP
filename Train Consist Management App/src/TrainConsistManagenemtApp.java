@@ -1,29 +1,31 @@
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class TrainConsistManagenemtApp {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static boolean binarySearch(String[] bogieIds, String key) {
+        Arrays.sort(bogieIds);
+        int low = 0;
+        int high = bogieIds.length - 1;
 
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            int comparison = key.compareTo(bogieIds[mid]);
 
-        System.out.print("Enter Bogie ID to search: ");
-        String searchKey = sc.nextLine();
-
-        boolean found = false;
-
-        for (int i = 0; i < bogieIds.length; i++) {
-            if (bogieIds[i].equals(searchKey)) {
-                found = true;
-                break;
+            if (comparison == 0) {
+                return true;
+            } else if (comparison > 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
+        return false;
+    }
 
-        if (found) {
-            System.out.println("Bogie " + searchKey + " found in the consist.");
-        } else {
-            System.out.println("Bogie " + searchKey + " not found.");
-        }
+    public static void main(String[] args) {
+        String[] bogies = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+        String searchKey = "BG309";
 
-        sc.close();
+        boolean found = binarySearch(bogies, searchKey);
+        System.out.println("Bogie Found: " + found);
     }
 }
